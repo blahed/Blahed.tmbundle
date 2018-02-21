@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>nop</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby18 -wKU
+
+require 'fileutils'
+require 'uri'
+
+relative_path = %x[osascript -e 'set p to text returned of (display dialog "Create a new file at path:" default answer "")']
+absolute_path = File.join(ENV['TM_PROJECT_DIRECTORY'], relative_path).to_s[0..-2]
+directory     = File.dirname(absolute_path)
+
+FileUtils.mkdir_p directory
+FileUtils.touch absolute_path
+
+%x[open txmt://open?url=file://#{URI.escape(absolute_path)}]
+
+</string>
+	<key>input</key>
+	<string>none</string>
+	<key>inputFormat</key>
+	<string>text</string>
+	<key>keyEquivalent</key>
+	<string>~@N</string>
+	<key>name</key>
+	<string>Create file at path</string>
+	<key>outputCaret</key>
+	<string>afterOutput</string>
+	<key>outputFormat</key>
+	<string>text</string>
+	<key>outputLocation</key>
+	<string>toolTip</string>
+	<key>uuid</key>
+	<string>5FB75EF7-0572-4828-B0DF-1425FEEE260F</string>
+	<key>version</key>
+	<integer>2</integer>
+</dict>
+</plist>
